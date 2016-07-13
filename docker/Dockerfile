@@ -33,12 +33,12 @@ RUN mkdir /tmp2 && cd /tmp2 \
   && wget -O maven.tar.gz $MAVEN_TGZ_URL && tar xzf maven.tar.gz -C /usr/share \
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
-  && wget  -O Nutzwk.zip $NUTZWK_TGZ_URL | unzip -d /tmp2 Nutzwk.zip  \
+  && wget  -O Nutzwk.zip $NUTZWK_TGZ_URL \
+  && unzip -d /tmp2 Nutzwk.zip  \
   && cd /tmp2 && cd NutzWk-$NUTZWK_TAG_NAME \
   && mvn clean package \
   && mkdir -p /usr/local/tomcat/webapps/ROOT \
   && cp -r target/NutzWk-3.1.0/* /usr/local/tomcat/webapps/ROOT/ \
-  && find /usr/local/tomcat/webapps/ROOT/ \
   && cd / \
   && rm -fr /tmp2 usr/share/maven /usr/bin/mvn ~/.m2
 
