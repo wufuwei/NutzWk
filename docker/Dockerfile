@@ -20,14 +20,19 @@ RUN cd $CATALINA_HOME \
 
 
 ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_TGZ_URL https://www.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+ENV MAVEN_MAJOR 3
+ENV MAVEN_VERSION 3.3.9
+ENV MAVEN_TGZ_URL http://mirrors.cnnic.cn/apache/maven/maven-$MAVEN_MAJOR/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
+ENV NUTZWK_TAG_NAME=bootstrap
+ENV NUTZWK_TGZ_URL https://github.com/wufuwei/NutzWk/archive/$NUTZWK_TAG_NAME.zip
+
 
 RUN mkdir /tmp2 && cd /tmp2 \ 
-  && curl -sSL $MAVEN_TGZ_URL | tar xzf - -C /usr/share \
-  && mv /usr/share/apache-maven-3.3.3 /usr/share/maven \
+  && wget $MAVEN_TGZ_URL | tar xzf - -C /usr/share \
+  && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
-  && curl -sSL https://github.com/wufuwei/NutzWk/archive/bootstrap.zip | tar xzf - -C /tmp2 \
-  && cd /tmp2 && ls -l  && cd NutzWk-bootstrap \
+  && wget  $NUTZWK_TGZ_URL | unzip  - -C /tmp2 \
+  && cd /tmp2 && cd NutzWk-$NUTZWK_TAG_NAME \
   && mvn clean package \
   && mkdir -p /usr/local/tomcat/webapps/ROOT \
   && cp -r target/NutzWk-3.1.0/* /usr/local/tomcat/webapps/ROOT/ \
