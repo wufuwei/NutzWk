@@ -22,7 +22,7 @@ RUN cd $CATALINA_HOME \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_TGZ_URL https://www.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
 
-RUN mkdir /tmp2 && cd /tmp2 \
+RUN mkdir /tmp2 && cd /tmp2 \ 
   && curl -sSL $MAVEN_TGZ_URL | tar xzf - -C /usr/share \
   && mv /usr/share/apache-maven-3.3.3 /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
