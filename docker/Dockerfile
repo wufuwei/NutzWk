@@ -26,7 +26,7 @@ RUN mkdir /tmp2 && cd /tmp2 \
   && curl -sSL $MAVEN_TGZ_URL | tar xzf - -C /usr/share \
   && mv /usr/share/apache-maven-3.3.3 /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
-  && curl -sSL https://github.com/Wizzercn/NutzWk/archive/bootstrap.zip | tar xzf - -C /tmp2 \
+  && curl -sSL https://github.com/wufuwei/NutzWk/archive/bootstrap.zip | tar xzf - -C /tmp2 \
   && cd /tmp2 && ls -l  && cd NutzWk-bootstrap \
   && mvn clean package \
   && mkdir -p /usr/local/tomcat/webapps/ROOT \
