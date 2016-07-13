@@ -1,4 +1,4 @@
-FROM nimmis/java:oracle-8-jdk
+FROM keensoft/centos7-java8
 
 MAINTAINER wufuwei "wufuwei@gmail.com"
 
@@ -9,6 +9,8 @@ ENV TOMCAT_MAJOR 8
 ENV TOMCAT_VERSION 8.5.4
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 ENV DEBIAN_FRONTEND noninteractive
+
+RUN yum -y install unzip
 
 RUN cd $CATALINA_HOME \
 	&&wget -O tomcat.tar.gz $TOMCAT_TGZ_URL \
@@ -26,7 +28,7 @@ ENV MAVEN_TGZ_URL http://mirrors.cnnic.cn/apache/maven/maven-$MAVEN_MAJOR/$MAVEN
 ENV NUTZWK_TAG_NAME=bootstrap
 ENV NUTZWK_TGZ_URL https://github.com/wufuwei/NutzWk/archive/$NUTZWK_TAG_NAME.zip
 
-RUN yum -y install unzip
+
 RUN mkdir /tmp2 && cd /tmp2 \ 
   && wget -O maven.tar.gz $MAVEN_TGZ_URL && tar xzf maven.tar.gz -C /usr/share \
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
