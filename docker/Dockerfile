@@ -26,12 +26,12 @@ ENV MAVEN_TGZ_URL http://mirrors.cnnic.cn/apache/maven/maven-$MAVEN_MAJOR/$MAVEN
 ENV NUTZWK_TAG_NAME=bootstrap
 ENV NUTZWK_TGZ_URL https://github.com/wufuwei/NutzWk/archive/$NUTZWK_TAG_NAME.zip
 
-
+RUN yum -y install unzip
 RUN mkdir /tmp2 && cd /tmp2 \ 
-  && wget $MAVEN_TGZ_URL | tar xzf - -C /usr/share \
+  && wget -O maven.tar.gz $MAVEN_TGZ_URL && tar xzf maven.tar.gz -C /usr/share \
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
-  && wget  $NUTZWK_TGZ_URL | unzip  - -C /tmp2 \
+  && wget  -O Nutzwk.zip $NUTZWK_TGZ_URL | unzip -d /tmp2 Nutzwk.zip  \
   && cd /tmp2 && cd NutzWk-$NUTZWK_TAG_NAME \
   && mvn clean package \
   && mkdir -p /usr/local/tomcat/webapps/ROOT \
@@ -51,4 +51,6 @@ ENV LANG C.UTF-8
 ENV TZ "Asia/Shanghai"
 ENV "ehcache.disk.store.dir" "/data"
 VOLUME /data
+
+CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
 
