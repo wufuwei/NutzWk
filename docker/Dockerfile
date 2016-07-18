@@ -1,6 +1,6 @@
 FROM keensoft/centos7-java8
 
-MAINTAINER wufuwei "wufuwei@gmail.com"
+MAINTAINER wufuwei "oradb@163.com"
 
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -17,8 +17,8 @@ RUN cd $CATALINA_HOME \
 	&& tar -xvf tomcat.tar.gz --strip-components=1 \
 	&& cd $CATALINA_HOME \
 	&& rm bin/*.bat \
-	&& rm tomcat.tar.gz* && rm -fr /usr/local/tomcat/webapps/ROOT \
-	&& rm -fr /usr/local/tomcat/webapps/docs /usr/local/tomcat/webapps/host-manager /usr/local/tomcat/webapps/manager /usr/local/tomcat/webapps/examples
+	&& rm tomcat.tar.gz* \
+	&& rm -fr /usr/local/tomcat/webapps/* \
 
 
 ENV MAVEN_HOME /usr/share/maven
@@ -37,16 +37,13 @@ RUN mkdir /tmp2 && cd /tmp2 \
   && unzip -d /tmp2 Nutzwk.zip  \
   && cd /tmp2 && cd NutzWk-$NUTZWK_TAG_NAME \
   && mvn clean package \
-  && mkdir -p /usr/local/tomcat/webapps/ROOT \
-  && cp -r target/NutzWk-3.1.0/* /usr/local/tomcat/webapps/ROOT/ \
+  && cp -r target/nutzwk.war /usr/local/tomcat/webapps/ROOT.war \
   && cd / \
   && rm -fr /tmp2 usr/share/maven /usr/bin/mvn ~/.m2
 
 WORKDIR $CATALINA_HOME
 
 EXPOSE 8080
-EXPOSE 81
-EXPOSE 15555
 COPY docker-entrypoint.py /entrypoint.py
 CMD ["python", "/entrypoint.py"]
 ENV LANG C.UTF-8
